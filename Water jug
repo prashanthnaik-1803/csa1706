@@ -1,0 +1,27 @@
+from collections import deque
+
+def water_jug():
+    visited = set()
+    q = deque([((0, 0), [])])  
+
+    while q:
+        (a, b), path = q.popleft()
+        if a == 2:
+            return path + [(a, b)]
+
+        if (a, b) in visited:
+            continue
+        visited.add((a, b))
+
+        next_states = [
+            (4, b), (a, 3), (0, b), (a, 0),
+            (a - min(a, 3 - b), b + min(a, 3 - b)), 
+            (a + min(b, 4 - a), b - min(b, 4 - a))   
+        ]
+
+        for state in next_states:
+            q.append((state, path + [(a, b)]))
+
+sol = water_jug()
+for step in sol:
+    print(f"4L: {step[0]}L, 3L: {step[1]}L")
