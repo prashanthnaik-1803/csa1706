@@ -1,0 +1,26 @@
+def vacuum(start):
+    path = [start]
+    loc, a, b = start
+
+    if loc == 'A':
+        if a == 'Dirty':
+            a = 'Clean'
+            path.append((loc, a, b))
+        loc = 'B'
+        path.append((loc, a, b))
+        if b == 'Dirty':
+            b = 'Clean'
+            path.append((loc, a, b))
+    else:
+        if b == 'Dirty':
+            b = 'Clean'
+            path.append((loc, a, b))
+        loc = 'A'
+        path.append((loc, a, b))
+        if a == 'Dirty':
+            a = 'Clean'
+            path.append((loc, a, b))
+    return path
+steps = vacuum(('A', 'Dirty', 'Dirty'))
+for i, s in enumerate(steps):
+    print(f"Step {i}: {s}")
