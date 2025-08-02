@@ -1,0 +1,16 @@
+r = ['WA','NT','SA','Q','NSW','V','T']
+n = {'WA':['NT','SA'],'NT':['WA','SA','Q'],'SA':['WA','NT','Q','NSW','V'],
+     'Q':['NT','SA','NSW'],'NSW':['Q','SA','V'],'V':['SA','NSW'],'T':[]}
+c = ['R','G','B']
+
+def s(a={}):
+    if len(a) == len(r): return a
+    x = [i for i in r if i not in a][0]
+    for col in c:
+        if all(a.get(j) != col for j in n[x]):
+            a[x] = col
+            if s(a): return a
+            del a[x]
+
+m = s()
+for i in r: print(i, m[i])
