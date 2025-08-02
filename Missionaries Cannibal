@@ -1,0 +1,36 @@
+from collections import deque
+
+def is_valid(m, c):
+    return 0 <= m <= 3 and 0 <= c <= 3 and (m == 0 or m >= c)
+
+def get_successors(state):
+    m, c, side = state
+    moves = [(1,0),(0,1),(1,1),(2,0),(0,2)]
+    next_states = []
+    for dm, dc in moves:
+        if side == 'left':
+            new = (m - dm, c - dc, 'right')
+        else:
+            new = (m + dm, c + dc, 'left')
+        m1, c1, _ = new
+        m2, c2 = 3 - m1, 3 - c1
+        if is_valid(m1, c1) and is_valid(m2, c2):
+            next_states.append(new)
+    return next_states
+
+def bfs():
+    start = (3, 3, 'left')
+    goal = (0, 0, 'right')
+    queue = deque([(start, [start])])
+    visited = set()
+    while queue:
+        state, path = queue.popleft()
+        if state in visited: continue
+        visited.add(state)
+        if state == goal: return path
+        for s in get_successors(state):
+            queue.append((s, path + [s]))
+
+sol = bfs()
+for i, s in enumerate(sol):
+    print(f"Step {i}: {s}")
