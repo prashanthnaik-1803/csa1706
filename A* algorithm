@@ -1,0 +1,19 @@
+from queue import PriorityQueue
+
+def a_star(g, h, start, goal):
+    q = PriorityQueue()
+    q.put((0 + h[start], start, [start]))
+    visited = set()
+    while not q.empty():
+        f, node, path = q.get()
+        if node == goal: return path
+        if node in visited: continue
+        visited.add(node)
+        for nbr, cost in g[node]:
+            if nbr not in visited:
+                q.put((f - h[node] + cost + h[nbr], nbr, path + [nbr]))
+
+g = {'A':[('B',1),('C',4)], 'B':[('C',2),('D',5)], 'C':[('D',1)], 'D':[]}
+h = {'A':7,'B':6,'C':2,'D':0}
+
+print("Path:", ' → '.join(a_star(g,h,'A','D')))
