@@ -1,3 +1,4 @@
+print("192472272-R.Prashanth Naik")
 def alphabeta(state, depth, alpha, beta, maximizing):
     if terminal(state) or depth == 0:
         return evaluate(state)
