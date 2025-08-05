@@ -1,3 +1,4 @@
+print("192472272-R.Prashanth Naik")
 def is_safe(board, row, col):
     for i in range(row):
         if board[i] == col or \
