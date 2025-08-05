@@ -1,0 +1,25 @@
+import numpy as np
+
+def sigmoid(x): return 1 / (1 + np.exp(-x))
+def dsigmoid(x): return x * (1 - x)
+
+
+X = np.array([[0,0], [0,1], [1,0], [1,1]])
+y = np.array([[0], [1], [1], [0]])
+
+
+np.random.seed(0)
+W1 = np.random.rand(2, 4)
+W2 = np.random.rand(4, 1)
+
+for _ in range(10000):
+    H = sigmoid(X @ W1)
+    O = sigmoid(H @ W2)
+
+    dO = (y - O) * dsigmoid(O)
+    dH = dO @ W2.T * dsigmoid(H)
+
+    W2 += H.T @ dO
+    W1 += X.T @ dH
+
+print("Output:\n", O.round(3))
