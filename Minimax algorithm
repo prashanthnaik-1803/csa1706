@@ -1,0 +1,20 @@
+def minimax(depth, is_maximizing):
+    if game_over():
+        return evaluate()
+
+    if is_maximizing:
+        best = -float('inf')
+        for move in get_moves():
+            make_move(move, 'AI')
+            val = minimax(depth + 1, False)
+            undo_move(move)
+            best = max(best, val)
+        return best
+    else:
+        best = float('inf')
+        for move in get_moves():
+            make_move(move, 'Player')
+            val = minimax(depth + 1, True)
+            undo_move(move)
+            best = min(best, val)
+        return best
